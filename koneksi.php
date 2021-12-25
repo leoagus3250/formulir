@@ -1,4 +1,4 @@
 <?php 
-  $koneksi = mysqli_connect("localhost", "root", "", "cpmk4_20523048");
+  $koneksi = mysqli_connect("localhost", "root", "", "cpmk4");
 
  ?>

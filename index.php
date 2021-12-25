@@ -9,7 +9,7 @@
 		<div class="container">
 			<h1>LOGIN</h1>
 			
-			<form>
+			<form method="post"> 
 				<table>
 					<tr>
 						<td>
@@ -53,15 +53,37 @@
 <?php 
     include "koneksi.php";
 
-    if(isset($_POST['kirim'])){
-        mysqli_query($koneksi, "insert into akun set
-        username = '$_POST[username]',
-        password = '$_POST[password]'
+	// echo 'isi $_GET: ';
+	// print_r($_GET);
 
-        ");
+	// echo "\r\nisi POST: ";
+	// print_r($_POST);
 
-        echo "Formulir Berhasil Disimpan";
+	if(isset($_POST['username'])){
+		$sql = "select * from akun where username = '$_POST[username]' AND password = '$_POST[password]'";
+
+		$query = $koneksi->query($sql);
+
+		$data = $query->fetch_assoc();
+
+		if (empty($data)){
+			$sql2 = "select * from akun where username = '$_POST[username]'";
+			$query2 = $koneksi->query($sql2);
+			$data2 = $query2->fetch_assoc();
+
+			if (!empty($data2)){
+				$error = "Wrong password";
+			}else{
+				$error = "Username not found";
+			}
+		}else{
+			print_r($data);
+		}
+	}
+
+	if (isset($error)){
+		print($error);
+	}
         
-    }
 ?>
 
